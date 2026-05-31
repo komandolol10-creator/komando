@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRAZILI STORE</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --primary-blue: #0072ff;
+            --turquoise: #00cec9;
+            --neon-blue-glow: rgba(0, 114, 255, 0.6);
+            --neon-turq-glow: rgba(0, 206, 201, 0.8);
+            --text-color: #2d3436;
+            --text-muted: #636e72;
+            --header-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "WELCOME TO BRAZILI STORE";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            font-size: 8vw;
+            font-weight: 900;
+            color: rgba(0, 206, 201, 0.04);
+            white-space: nowrap;
+            z-index: -1;
+            pointer-events: none;
+            letter-spacing: 10px;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--turquoise);
+            box-shadow: 0 4px 20px rgba(0, 206, 201, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px var(--neon-turq-glow));
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-auth {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .btn-account-hub {
+            background-color: #f0f3f5;
+            color: var(--text-color);
+            border: 1px solid #e2e8f0;
+        }
+        .btn-account-hub:hover {
+            background-color: #e2e8f0;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 12px var(--neon-blue-glow);
+        }
+
+        .btn-admin {
+            background-color: #ffffff;
+            border: 1px solid var(--turquoise);
+            color: var(--turquoise);
+        }
+        .btn-admin:hover {
+            background: linear-gradient(135deg, var(--turquoise), var(--primary-blue));
+            color: white;
+            box-shadow: 0 0 15px var(--neon-turq-glow);
+            border-color: transparent;
+        }
+
+        .btn-lang {
+            background-color: transparent;
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
+            padding: 9px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-lang:hover {
+            background-color: var(--primary-blue);
+            color: white;
+            box-shadow: 0 4px 12px var(--neon-blue-glow);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glow-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-blue), var(--turquoise));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px rgba(0, 206, 201, 0.2));
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+        }
+
+        .card:hover {
+            border-color: var(--turquoise);
+            box-shadow: 0 12px 24px rgba(0, 206, 201, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .card i {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--turquoise));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .btn-action {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--turquoise));
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 15px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--neon-blue-glow);
+        }
+
+        .btn-action:hover {
+            box-shadow: 0 6px 20px var(--neon-turq-glow);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-nav-back {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: var(--text-color);
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .btn-nav-back:hover {
+            border-color: var(--turquoise);
+            color: var(--turquoise);
+            box-shadow: 0 0 10px var(--neon-turq-glow);
+        }
+
+        .price-list {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 12px;
+            border-bottom: 1px solid #f0f3f5;
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-item .item-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        .price-item .item-cost {
+            color: var(--primary-blue);
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .more-prices-notice {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .more-prices-notice:hover {
+            color: var(--turquoise);
+            text-shadow: 0 0 8px var(--neon-turq-glow);
+        }
+
+        .why-us {
+            background: linear-gradient(90deg, rgba(0, 206, 201, 0.08), rgba(0, 114, 255, 0.03));
+            border-left: 5px solid var(--turquoise);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 40px;
+        }
+
+        .why-us h3 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .btn-contact {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .btn-whatsapp { background-color: #25d366; }
+        .btn-whatsapp:hover { box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4); }
+
+        .admin-table-container {
+            background-color: var(--card-bg);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            overflow-x: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f3f5;
+        }
+
+        .admin-table th {
+            background-color: #f8fafc;
+            color: var(--primary-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            background-color: #e6f7ed;
+            color: #2e7d32;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .login-box {
+            background-color: var(--card-bg);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 450px;
+            padding: 35px;
+            position: relative;
+            transform: scale(0.8);
+        }
+
+        .modal-overlay.active .login-box {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        .close-modal:hover { color: var(--primary-blue); }
+
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--text-color);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .input-group input:focus {
+            border-color: var(--turquoise);
+            outline: none;
+            box-shadow: 0 0 8px var(--neon-turq-glow);
+            background-color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .floating-contact-trigger {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--turquoise));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 15px var(--neon-blue-glow);
+            cursor: pointer;
+            z-index: 99;
+        }
+        .floating-contact-trigger:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo" onclick="showPage('home')">BRAZILI STORE</div>
+        <div class="header-controls">
+            <button class="btn-auth btn-admin" onclick="checkAdminAccess()">
+                <i class="fas fa-user-gear"></i> <span class="lang-text" data-en="Admin Panel" data-ar="لوحة التحكم">Admin Panel</span>
+            </button>
+            <button class="btn-auth btn-account-hub" id="authBtnHub" onclick="openAuthModal('signin')">
+                <i class="fas fa-user-plus"></i> <span class="lang-text" data-en="Sign In / Register" data-ar="تسجيل الدخول / حساب جديد">Sign In / Register</span>
+            </button>
+            <button class="btn-lang" onclick="toggleLanguage()">العربية</button>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- ================= PAGE 1: HOME ================= -->
+        <div id="home" class="page active">
+            <h1 class="glow-title lang-text" data-en="WELCOME TO BRAZILI STORE" data-ar="مرحباً بكم في متجر البرازيلي">WELCOME TO BRAZILI STORE</h1>
+            
+            <div class="grid-4">
+                <div class="card" onclick="showPage('pubg-page')">
+                    <i class="fas fa-gamepad"></i>
+                    <h3 class="lang-text" data-en="PUBG MOBILE UC" data-ar="شدات ببجي موبايل">شدات ببجي موبايل</h3>
+                    <button class="btn-action lang-text" data-en="View Prices" data-ar="عرض الأسعار">View Prices</button>
+                </div>
+                <div class="card" onclick="showPage('contact-page')">
+                    <i class="fas fa-user-shield"></i>
+                    <h3 class="lang-text" data-en="PUBG ACCOUNTS" data-ar="حسابات ببجي متميزة">حسابات ببجي متميزة</h3>
+                    <button class="btn-action lang-text" data-en="Contact Us" data-ar="تواصل معنا">Contact Us</button>
+                </div>
+                <div class="card" onclick="showPage('roblox-page')">
+                    <i class="fas fa-cube"></i>
+                    <h3 class="lang-text" data-en="ROBLOX ROBUX" data-ar="روبوكس روبلوكس">روبوكس روبلوكس</h3>
+                    <button class="btn-action lang-text" data-en="View Prices" data-ar="عرض الأسعار">View Prices</button>
+                </div>
+                <div class="card" onclick="showPage('contact-page')">
+                    <i class="fas fa-users"></i>
+                    <h3 class="lang-text" data-en="ROBLOX ACCOUNTS" data-ar="حسابات روبلوكس">حسابات روبلوكس</h3>
+                    <button class="btn-action lang-text" data-en="Contact Us" data-ar="تواصل معنا">Contact Us</button>
+                </div>
+            </div>
+
+            <h2 class="lang-text" data-en="PAYMENT METHODS" data-ar="طرق الدفع المتاحة" style="text-align:center; margin-bottom:25px; color: var(--text-muted);">PAYMENT METHODS</h2>
+            <div class="grid-4">
+                <div class="card" onclick="showPage('payment-guide-page')">
+                    <i class="fab fa-bitcoin"></i>
+                    <h3 class="lang-text" data-en="Crypto Currency" data-ar="العملات الرقمية">Crypto Currency</h3>
+                </div>
+                <div class="card" onclick="showPage('payment-guide-page')">
+                    <i class="fas fa-credit-card"></i>
+                    <h3 class="lang-text" data-en="Credit Card" data-ar="البطاقة الائتمانية">Credit Card</h3>
+                </div>
+                <div class="card" onclick="showPage('payment-guide-page')">
+                    <i class="fas fa-wallet"></i>
+                    <h3 class="lang-text" data-en="Vodafone Cash" data-ar="فودافون كاش">Vodafone Cash</h3>
+                </div>
+                <div class="card" onclick="showPage('payment-guide-page')">
+                    <i class="fas fa-sync-alt"></i>
+                    <h3 class="lang-text" data-en="Account Exchange" data-ar="نظام التبادل">Account Exchange</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 2: PUBG UC PRICES ================= -->
+        <div id="pubg-page" class="page">
+            <button class="btn-nav-back" onclick="showPage('home')"><i class="fas fa-arrow-left"></i> <span class="lang-text" data-en="Back" data-ar="رجوع">Back</span></button>
+            <h1 class="glow-title lang-text" data-en="PUBG MOBILE UC" data-ar="أسعار شدات ببجي">PUBG MOBILE UC</h1>
+            <div class="price-list">
+                <div class="price-item"><span class="item-name">30 UC</span><span class="item-cost">23 EGP</span></div>
+                <div class="price-item"><span class="item-name">60 UC</span><span class="item-cost">45 EGP</span></div>
+                <div class="price-item"><span class="item-name">325 UC</span><span class="item-cost">215 EGP</span></div>
+                <div class="price-item"><span class="item-name">660 UC</span><span class="item-cost">425 EGP</span></div>
+                
+                <!-- إشعار التواصل لأسعار أكتر -->
+                <div class="more-prices-notice lang-text" data-en="Want more rates? Contact us now!" data-ar="لو عاوز أسعار أكتر خش كلمنا الآن" onclick="showPage('contact-page')">
+                    لو عاوز أسعار أكتر خش كلمنا الآن
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 3: ROBLOX ROBUX ================= -->
+        <div id="roblox-page" class="page">
+            <button class="btn-nav-back" onclick="showPage('home')"><i class="fas fa-arrow-left"></i> <span class="lang-text" data-en="Back" data-ar="رجوع">Back</span></button>
+            <h1 class="glow-title lang-text" data-en="ROBLOX ROBUX" data-ar="أسعار روبوكس">ROBLOX ROBUX</h1>
+            <div class="price-list">
+                <div class="price-item"><span class="item-name">400 Robux</span><span class="item-cost">300 EGP</span></div>
+                <div class="price-item"><span class="item-name">800 Robux</span><span class="item-cost">550 EGP</span></div>
+                <div class="price-item"><span class="item-name">1700 Robux</span><span class="item-cost">1100 EGP</span></div>
+                <div class="price-item"><span class="item-name">4500 Robux</span><span class="item-cost">2750 EGP</span></div>
+                <div class="price-item"><span class="item-name">10000 Robux</span><span class="item-cost">5850 EGP</span></div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 4: CONTACT ================= -->
+        <div id="contact-page" class="page">
+            <button class="btn-nav-back" onclick="showPage('home')"><i class="fas fa-arrow-left"></i> <span class="lang-text" data-en="Back" data-ar="رجوع">Back</span></button>
+            <h1 class="glow-title lang-text" data-en="CONTACT BRAZILI" data-ar="التواصل مع البرازيلي">CONTACT BRAZILI</h1>
+            <div class="why-us">
+                <h3 class="lang-text" data-en="Why choose BRAZILI STORE?" data-ar="لماذا تختار متجر البرازيلي؟">Why choose BRAZILI STORE?</h3>
+                <p class="lang-text" data-en="⚡ Instant Safe Delivery! &lt;br&gt;🔥 Ultimate Competitive Rates." data-ar="⚡ شحن رسمي فوري وآمن 100%. &lt;br&gt;🔥 أفضل أسعار منافسة في السوق.">⚡ Instant Safe Delivery! <br>🔥 Ultimate Competitive Rates.</p>
+            </div>
+            <div class="contact-buttons">
+                <a href="https://wa.me/201016969272" target="_blank" class="btn-contact btn-whatsapp"><i class="fab fa-whatsapp"></i> Support 1 (01016969272)</a>
+                <a href="https://wa.me/201106595002" target="_blank" class="btn-contact btn-whatsapp"><i class="fab fa-whatsapp"></i> Support 2 (01106595002)</a>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 5: GUIDE ================= -->
+        <div id="payment-guide-page" class="page">
+            <button class="btn-nav-back" onclick="showPage('home')"><i class="fas fa-arrow-left"></i> <span class="lang-text" data-en="Back" data-ar="رجوع">Back</span></button>
+            <h1 class="glow-title lang-text" data-en="PAYMENT INSTRUCTIONS" data-ar="طريقة وإجراءات الدفع">PAYMENT INSTRUCTIONS</h1>
+            <div class="guide-step"><h4>Step 1: Choose Pack</h4></div>
+            <div class="guide-step"><h4>Step 2: Connect Support</h4></div>
+        </div>
+
+        <!-- ================= PAGE 6: ADMIN PANEL ================= -->
+        <div id="admin-panel-page" class="page">
+            <button class="btn-nav-back" onclick="showPage('home')"><i class="fas fa-arrow-left"></i> <span class="lang-text" data-en="Back to Store" data-ar="العودة للمتجر">Back to Store</span></button>
+            <h1 class="glow-title lang-text" data-en="ADMIN CONTROL PANEL" data-ar="لوحة تحكم المدير العام">ADMIN CONTROL PANEL</h1>
+            
+            <div class="admin-table-container">
+                <h2 class="lang-text" data-en="Live Registered Users" data-ar="المستخدمين المسجلين حقيقياً">Live Registered Users</h2>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th class="lang-text" data-en="User UID" data-ar="معرف المستخدم (UID)">User UID</th>
+                            <th class="lang-text" data-en="User Email" data-ar="البريد الإلكتروني">User Email</th>
+                            <th class="lang-text" data-en="Account Status" data-ar="حالة الحساب">Account Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-users-table-body">
+                        <tr>
+                            <td colspan="3" style="text-align:center; padding:20px; color:var(--text-muted);">Loading users...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- AUTH MODAL -->
+    <div id="authModal" class="modal-overlay" onclick="closeAuthModalOutside(event)">
+        <div class="login-box">
+            <span class="close-modal" onclick="closeAuthModal()">&times;</span>
+            
+            <div id="signin-form-wrapper">
+                <h2>SIGN IN</h2>
+                <form id="signInForm">
+                    <div class="input-group">
+                        <label>Store Username / Email</label>
+                        <input type="email" id="signInEmail" required placeholder="name@brazili.store">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="signInPassword" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn-action">LOG IN</button>
+                </form>
+                <div class="switch-auth-mode"><p>Don't have an account? <span onclick="toggleAuthMode('signup')">Create Account</span></p></div>
+            </div>
+
+            <div id="signup-form-wrapper" style="display: none;">
+                <h2>CREATE ACCOUNT</h2>
+                <form id="signUpForm">
+                    <div class="input-group">
+                        <label>Create Email Account</label>
+                        <input type="email" id="signUpEmail" required placeholder="name@brazili.store">
+                    </div>
+                    <div class="input-group">
+                        <label>Create Secure Password</label>
+                        <input type="password" id="signUpPassword" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn-action">REGISTER NOW</button>
+                </form>
+                <div class="switch-auth-mode"><p>Already have an account? <span onclick="toggleAuthMode('signin')">Login Here</span></p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN MODAL -->
+    <div id="adminAuthModal" class="modal-overlay" onclick="closeAdminModalOutside(event)">
+        <div class="login-box" style="border-color: var(--turquoise);">
+            <span class="close-modal" onclick="closeAdminModal()">&times;</span>
+            <h2>ADMIN ACCESS</h2>
+            <div class="input-group">
+                <label>Enter Security Code</label>
+                <input type="password" id="adminCodeInput" placeholder="••••••••">
+            </div>
+            <button class="btn-action" onclick="verifyAdminCode()">VERIFY</button>
+        </div>
+    </div>
+
+    <footer><p>&copy; 2026 BRAZILI STORE. All Rights Reserved.</p></footer>
+    <div class="floating-contact-trigger" onclick="showPage('contact-page')"><i class="fas fa-headset"></i></div>
+
+    <!-- ================= BACKEND LOGIC INTERACTION SCRIPT (FIREBASE) ================= -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAVYFx-BeQBm7o-ChcGr7QFZvL2WESDp2I",
+            authDomain: "brazili-store.firebaseapp.com",
+            projectId: "brazili-store",
+            storageBucket: "brazili-store.firebasestorage.app",
+            messagingSenderId: "227559664574",
+            appId: "1:227559664574:web:d5e37c84910e12c0c127ef",
+            measurementId: "G-GZY4XJGE4X"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.showPage = function(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        };
+
+        window.openAuthModal = function(mode) {
+            document.getElementById('authModal').classList.add('active');
+            window.toggleAuthMode(mode);
+        };
+
+        window.closeAuthModal = function() {
+            document.getElementById('authModal').classList.remove('active');
+        };
+
+        window.closeAuthModalOutside = function(e) {
+            if(e.target.id === 'authModal') window.closeAuthModal();
+        };
+
+        window.toggleAuthMode = function(mode) {
+            if(mode === 'signin') {
+                document.getElementById('signin-form-wrapper').style.display = 'block';
+                document.getElementById('signup-form-wrapper').style.display = 'none';
+            } else {
+                document.getElementById('signin-form-wrapper').style.display = 'none';
+                document.getElementById('signup-form-wrapper').style.display = 'block';
+            }
+        };
+
+        window.checkAdminAccess = function() {
+            document.getElementById('adminAuthModal').classList.add('active');
+            document.getElementById('adminCodeInput').focus();
+        };
+
+        window.closeAdminModal = function() {
+            document.getElementById('adminAuthModal').classList.remove('active');
+            document.getElementById('adminCodeInput').value = '';
+        };
+
+        window.closeAdminModalOutside = function(e) {
+            if(e.target.id === 'adminAuthModal') window.closeAdminModal();
+        };
+
+        window.verifyAdminCode = function() {
+            const codeInput = document.getElementById('adminCodeInput').value;
+            if (codeInput === '01279082727') {
+                window.closeAdminModal();
+                window.showPage('admin-panel-page');
+                loadUsersIntoAdmin();
+            } else {
+                alert("❌ كود الأمان غير صحيح!");
+            }
+        };
+
+        // Sign Up
+        document.getElementById('signUpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("🎯 تم إنشاء حسابك بنجاح في متجر البرازيلي!");
+                    window.closeAuthModal();
+                    document.getElementById('signUpForm').reset();
+                })
+                .catch((error) => {
+                    alert("❌ خطأ أثناء التسجيل: " + error.message);
+                });
+        });
+
+        // Sign In
+        document.getElementById('signInForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("👋 أهلاً بك! تم تسجيل دخولك بنجاح.");
+                    window.closeAuthModal();
+                    document.getElementById('signInForm').reset();
+                })
+                .catch((error) => {
+                    alert("❌ بيانات الدخول غير صحيحة: " + error.message);
+                });
+        });
+
+        // Auth State Tracker
+        onAuthStateChanged(auth, (user) => {
+            const authBtnHub = document.getElementById('authBtnHub');
+            if (user) {
+                authBtnHub.innerHTML = `<i class="fas fa-user-check"></i> ${user.email}`;
+                authBtnHub.style.borderColor = "var(--turquoise)";
+                authBtnHub.onclick = null;
+            } else {
+                authBtnHub.innerHTML = `<i class="fas fa-user-plus"></i> Sign In / Register`;
+                authBtnHub.style.borderColor = "#e2e8f0";
+                authBtnHub.onclick = () => window.openAuthModal('signin');
+            }
+        });
+
+        function loadUsersIntoAdmin() {
+            const tableBody = document.getElementById('admin-users-table-body');
+            const currentUser = auth.currentUser;
+
+            if (currentUser) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td><code>${currentUser.uid}</code></td>
+                        <td><strong>${currentUser.email}</strong></td>
+                        <td><span class="status-badge">Active/Verified</span></td>
+                    </tr>
+                `;
+            } else {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="3" style="text-align:center; color:var(--text-muted);">مفيش مستخدمين مسجلين دخول حالياً على هذا الجهاز. جرب سجل حساب جديد وهيظهر هنا فوراً!</td>
+                    </tr>
+                `;
+            }
+        }
+    </script>
+
+    <!-- Language Translation Logic -->
+    <script>
+        let currentLang = 'en';
+        function toggleLanguage() {
+            const langTexts = document.querySelectorAll('.lang-text');
+            const btnLang = document.querySelector('.btn-lang');
+            if (currentLang === 'en') {
+                currentLang = 'ar';
+                btnLang.textContent = 'English';
+                document.documentElement.dir = 'rtl';
+                langTexts.forEach(el => { if(el.getAttribute('data-ar')) el.innerHTML = el.getAttribute('data-ar'); });
+            } else {
+                currentLang = 'en';
+                btnLang.textContent = 'العربية';
+                document.documentElement.dir = 'ltr';
+                langTexts.forEach(el => { if(el.getAttribute('data-en')) el.innerHTML = el.getAttribute('data-en'); });
+            }
+        }
+    </script>
+</body>
+</html>
